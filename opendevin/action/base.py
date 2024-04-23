@@ -9,6 +9,11 @@ if TYPE_CHECKING:
 
 @dataclass
 class Action:
+    def __init__(self, **kwargs):
+        for key, value in kwargs.items():
+            if key in self.__class__.__dict__:
+                setattr(self, key, value)
+                
     async def run(self, controller: 'AgentController') -> 'Observation':
         raise NotImplementedError
 
